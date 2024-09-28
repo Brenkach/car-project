@@ -10,7 +10,7 @@ People::People(string newname, string newsurname)
 	: name{ newname }, surname  { newsurname } {}
 People::People(string newaname, string newsurname, int age)
 	: name{ newaname }, surname{ newsurname }, age{ age } {}
-People::People(string newaname, string newsurname, int age, int number_phone)
+People::People(string newaname, string newsurname, int age, string number_phone)
 	: name{ newaname }, surname{ newsurname }, age{ age }, number_phone{ number_phone } {}
 
 People::People(const People& other) {
@@ -33,7 +33,7 @@ People::People(People&& other)noexcept
 	other.name = nullptr;
 	other.surname = nullptr;
 	other.age = NULL;
-	other.number_phone = NULL;
+	other.number_phone = nullptr;
 } //Move constructor
 
 People::~People() {}

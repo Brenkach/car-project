@@ -1,3 +1,6 @@
-Color: red
-Car Age: 14
-Mark: volov
+Color: blue
+Car Age: 2022
+Mark: bmw
+Petrol: 8
+Door: 4
+Price: 5000

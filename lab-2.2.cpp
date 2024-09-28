@@ -118,8 +118,8 @@ int Admin()
 }
 int User()
 {
-	std::chrono::system_clock::time_point entertime = std::chrono::system_clock::now();
-	time_t et = std::chrono::system_clock::to_time_t(entertime);
+	chrono::system_clock::time_point entertime = chrono::system_clock::now();
+	time_t et = chrono::system_clock::to_time_t(entertime);
 	ofstream save("history.txt", ios::app);
 	save << "user entered at " << ctime(&et)<<'\n';
 	save.close();
@@ -193,6 +193,9 @@ int main()
 			cout << "Wrong input" << endl;
 		}
 	}
+
+
+
 
 	//	//Seler Seler1;
 	//	Car Car3{ "black", 2012, "Audi" };

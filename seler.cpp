@@ -6,11 +6,13 @@
 
 using namespace std;
 Seler::Seler()
-	:Seler{ 0, "None", "unknow" } {}
+	:Seler{ 0, "None", "unknow", "None" } {}
+
 Seler::Seler(int newselerage, string newselername)
-	:Seler{ newselerage, newselername, "Unknow" } {}
-Seler::Seler(int newselerage, string newselername, string newseleradress)
-	: selerage{ newselerage }, selername{ newselername }, seleradress{ newseleradress } {}
+	:Seler{ newselerage, newselername, "None", "Unknown" } {}
+
+Seler::Seler(int newselerage, string newselername, string newseleradress, string newselernumber_phone) :People(newselername, newseleradress, newselerage, newselernumber_phone) {}
+//: selerage{ newselerage }, selername{ newselername }, seleradress{ newseleradress }, selernumder_phone{newselernumber_phone} {}
 
 
 Seler::~Seler() {}
@@ -24,10 +26,15 @@ void Seler::selerSetage(int selerage) {
 void Seler::selerSetadress(string seleradress) {
 	this->seleradress = seleradress;
 }
+void Seler::selerSetnumder_phone(string selernumber_phone) {
+	this->selernumder_phone = selernumber_phone;
+}
 void Seler::selerDispley() {
 	cout << "Seler name:" << selername << endl;
 	cout << "Seler age" << selerage << endl;
 	cout << "Seler adress:" << seleradress << endl;
+	cout << "Seler number_phone:" << selernumder_phone << endl;
+
 }
 string Seler::fileName = "seler.txt";
 void Seler::AddSeler() {
@@ -66,5 +73,9 @@ istream& operator>>(istream& is, Seler& Seler) {
 	is.get();
 	cout << "Enter Seler adress: ";
 	is >> Seler.seleradress;
+
+	cout << "Enter Number_phone: ";
+	is >> Seler.number_phone;
+
 	return is;
 }

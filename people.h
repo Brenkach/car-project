@@ -8,7 +8,7 @@ protected:
 	string name;
 	string surname;
 	int age;
-	int number_phone;
+	string number_phone;
 
 
 public:
@@ -16,7 +16,7 @@ public:
 	People(string newname);
 	People(string newname, string newsurname);
 	People(string newname, string newsurname, int newage);
-	People(string newname, string newsurname, int newage, int newnumer_phone);
+	People(string newname, string newsurname, int newage, string newnumer_phone);
 	People(const People& other);//copy
 	People(People&& other) noexcept;//move
 	People& operator = (const People& other);//operator =

@@ -15,7 +15,7 @@ Client::Client(int newage, string newname, string newsurname)
 Client::Client(int newage, string newname, string surname, string newadress)
 	: People{ newname, surname, age }, adress{ newadress } {}
 
-Client::Client(int newage, string newname, string surname, string newadress, int number_phone)
+Client::Client(int newage, string newname, string surname, string newadress, string number_phone)
 	: People{ newname, surname, newage, number_phone }, adress{ newadress } {}
 
 Client::Client(const Client& other)

@@ -14,7 +14,7 @@ public:
 	Client(int newage, string newname);
 	Client(int newage, string newname, string surname);
 	Client(int newage, string newname, string surname, string newadress);
-	Client(int newage, string newname, string surname, string newadress, int number_phone);
+	Client(int newage, string newname, string surname, string newadress, string number_phone);
 	Client(const Client& other);
 	Client(Client&& other) noexcept;
 	Client& operator=(const Client& other);

@@ -1,5 +1,0 @@
-name: denys
-surname: unknow
-age: 18
-number_phone: -858993460
-adress: ighds
