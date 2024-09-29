@@ -2,13 +2,135 @@
 #pragma warning(disable:4996)
 #include <iostream>
 #include "car.h"
+#include <Windows.h>
 #include "seler.h"
 #include "Client.h"
 #include <string>
 #include <fstream>
 #include <chrono>
 #include <ctime>    
+#include <vector>
+#include <algorithm>
 using namespace std;
+
+void ShowUserManual() {
+	cout << "==============================\n";
+	cout << "        User Manual\n";
+	cout << "==============================\n";
+	cout << "The car management program has two access modes:\n";
+	cout << "1. Administrator Mode\n";
+	cout << "2. User Mode\n\n";
+
+	cout << "=== Main Menu ===\n";
+	cout << "1. Enter as admin - Login as administrator (password: 1234)\n";
+	cout << "2. Enter as user - Login as a regular user\n";
+	cout << "\n=== Administrator Menu ===\n";
+	cout << "1. Add Car - Add a new car (color, year of manufacture, brand, fuel consumption, doors, price)\n";
+	cout << "2. Display All Cars - Display all cars\n";
+	cout << "3. Add Client - Add a new client\n";
+	cout << "4. Display All Clients - Display all clients\n";
+	cout << "5. Add Seller - Add a new seller\n";
+	cout << "6. Display All Sellers - Display all sellers\n";
+	cout << "7. Exit - Exit administrator mode\n";
+	cout << "8. Show Most Economic Car - Find the most economical car\n";
+	cout << "9. Show Most Price Given Period - Calculate the average price of cars over a period\n";
+	cout << "10. Enter the Year of Cars to Remove - Remove cars by year\n";
+	cout << "11. Sort Cars - Sort cars by year\n";
+	cout << "12. Filter Cars by Years - Filter cars by year\n\n";
+
+	cout << "=== User Menu ===\n";
+	cout << "1. Display All Cars - Display a list of all cars\n";
+	cout << "2. Display All Clients - Display a list of all clients\n";
+	cout << "3. Display All Sellers - Display a list of all sellers\n";
+	cout << "4. Exit - Exit user mode\n\n";
+
+	cout << "Other Features:\n";
+	cout << " - Login times are saved in the file history.txt\n";
+	cout << " - Data is stored in files: cars.txt, client.txt, seller.txt\n";
+	cout << "==============================\n";
+
+
+}
+
+
+vector<Car> ReadCarsFromFile(const string& filename) {
+	ifstream inFile(filename);
+	vector<Car> cars;
+	if (!inFile.is_open()) {
+		cerr << "Unable to open file: " << filename << endl;
+		return cars;
+	}
+
+
+	string label;
+	string color, mark;
+	int carAge, door;
+	double petrol, price;
+
+	while (inFile >> label >> color // Зчитуємо "Color:"
+		>> label >> label >> carAge // Зчитуємо "Car Age:"
+		>> label >> mark // Зчитуємо "Mark:"
+		>> label >> petrol // Зчитуємо "Petrol:"
+		>> label >> door // Зчитуємо "Door:"
+		>> label >> price) // Зчитуємо "Price:"
+
+	{
+		Car car = Car(color, carAge, mark, petrol, door, price);
+		cars.push_back(car); // Додаємо автомобіль до вектора
+	}
+
+	inFile.close(); // Закриваємо файл
+	return cars; // Повертаємо вектор автомобілів
+}
+
+void FilterCarsByYear(const string& filename, int year) {
+	vector<Car> cars = ReadCarsFromFile(filename); // Зчитуємо автомобілі з файлу
+
+	bool found = false; // Прапорець для перевірки, чи знайдено автомобілі з вказаним роком
+
+	cout << "Cars from year " << year << ":" << endl;
+	for (auto car : cars) {
+		if (car.Getage() == year) { // Якщо рік автомобіля відповідає вказаному року
+			found = true;
+			cout << car;
+		}
+	}
+
+	if (!found) {
+		cout << "No cars found from year " << year << "." << endl;
+	}
+}
+
+
+void WriteCarsToFile(const string& filename, const vector<Car>& cars) {
+	ofstream outFile(filename, ios::trunc); // Відкриваємо файл у режимі перезапису
+
+	if (!outFile.is_open()) {
+		cerr << "Unable to open file: " << filename << endl;
+		return;
+	}
+
+	for ( auto car : cars) {
+		car.AddCar();
+	}
+
+	outFile.close(); // Закриваємо файл
+}
+
+// Функція для сортування автомобілів за роком та перезапису у файл
+void SortCarsByYear(const string& filename) {
+	vector<Car> cars = ReadCarsFromFile(filename); // Зчитуємо автомобілі з файлу
+
+	// Використовуємо std::sort для сортування автомобілів за роком (carAge)
+	sort(cars.begin(), cars.end(), []( Car a, Car b) {
+		return a.Getage() < b.Getage(); // Сортування у порядку зростання року
+		});
+
+	// Перезаписуємо відсортовані автомобілі у файл
+	WriteCarsToFile(filename, cars);
+
+	cout << "Cars have been sorted by year and written to the file." << endl;
+}
 
 //метод видалення по році
 void RemoveCarsByYear(int yearToRemove) {
@@ -198,8 +320,7 @@ void AppendSeler()
 }
 int Admin()
 {
-
-
+	
 	chrono::system_clock::time_point entertime = chrono::system_clock::now();
 	time_t et = chrono::system_clock::to_time_t(entertime);
 	ofstream save("history.txt", ios::app);
@@ -217,7 +338,10 @@ int Admin()
 		cout << "7. Exit" << endl;
 		cout << "8. Show most economic car" << endl;
 		cout << "9. Show most price given period " << endl;
-        cout << "10. Enter the year of cars to remove: ";
+		cout << "10. Enter the year of cars to remove " << endl;
+		cout << "11. Sort cars" << endl;
+		cout << "12 Filter cars by years" << endl;
+		cout << "13 User manual" << endl;
 		cout << "Enter your choice: " << endl;
 		cin >> choice;
 		try {
@@ -259,6 +383,36 @@ int Admin()
 				cin >> yearToRemove;
 				RemoveCarsByYear(yearToRemove);
 				break;
+			case 11:
+				SortCarsByYear("cars.txt");
+					break;
+			case 12:
+				int year;
+				cout << "Enter years from filter" << endl;
+				cin>> year;
+				FilterCarsByYear("cars.txt", year);
+				break;
+			case 13:
+			{string choice;
+
+			while (true) {
+				cout << "1. Show manual user\n";
+				cout << "2. Exit\n";
+				cout << "Your choice: ";
+				cin >> choice;
+
+				if (choice == "1") {
+					ShowUserManual();
+				}
+				else if (choice == "2") {
+					cout << "Exit...\n";
+					break;
+				}
+				else {
+					cout << "Invalid choice. Please try again.\n";
+					break;
+				}
+			}}
 			default:
 				cout << "Invalid choice. Please 101 again." << endl;
 				break;

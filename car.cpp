@@ -46,6 +46,10 @@ void Car::Setdoor (int newdoor) {
 void Car::Setprice(double newprice) {
 	this->price = newprice;
 }
+int Car::Getage() {
+	return this->carage;
+}
+
 void Car::CarDispley() {
 	cout << "Car age:" << carage << endl;
 	cout << "Car mark:" << mark << endl;

@@ -1,0 +1,24 @@
+Color: blue
+Car Age: 2020
+Mark: bmw
+Petrol: 10
+Door: 6
+Price: 6
+Color: d
+Car Age: 2022
+Mark: volvo
+Petrol: 5
+Door: 4
+Price: 4
+Color: red
+Car Age: 2022
+Mark: volvo
+Petrol: 15
+Door: 1
+Price: 1
+Color: white
+Car Age: 2024
+Mark: ford
+Petrol: 12
+Door: 5
+Price: 5

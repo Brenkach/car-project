@@ -34,6 +34,8 @@ public:
 	void CarDispley();
 	void AddCar();
 	void AllCars();
+
+	int Getage();
 	friend istream& operator>>(istream& is, Car& car);
 	friend ostream& operator<<(ostream& os, Car& car);    
 };
